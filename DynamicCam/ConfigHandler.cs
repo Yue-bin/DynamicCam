@@ -11,11 +11,15 @@ public static class ConfigHandler
 {
     private static readonly Dictionary<string, ConfigEntryBase> EntriesDict = new(StringComparer.InvariantCultureIgnoreCase);
 
+    private const string EdgeArrowSect = "EdgeArrow";
     private const string FollowCamSect = "FollowCam";
     private const string KeySect = "Keys";
 
     public static void InitConfig(ConfigFile config)
     {
+        var edgeArrowEntry = config.Bind(EdgeArrowSect, "ShowEdgeArrow", false, "是否显示边缘箭头");
+        EntriesDict[edgeArrowEntry.Definition.Key] = edgeArrowEntry;
+
         var dynamicCamKeybindEntry = config.Bind(KeySect, "DynamicCamKeybind", new KeyboardShortcut(KeyCode.F5),
             "切换相机跟随快捷键，按住并拖动鼠标中键以拖动视角，按住并滚动以缩放视角");
         EntriesDict[dynamicCamKeybindEntry.Definition.Key] = dynamicCamKeybindEntry;

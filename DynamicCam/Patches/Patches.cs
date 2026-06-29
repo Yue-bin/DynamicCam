@@ -25,7 +25,7 @@ public static class Patches
         {
             if (/* !__instance.isAI && */ !__instance.name.ToLower().Contains("snake"))
             {
-                if (!Plugin.IsQOLExLoaded)
+                if (!Plugin.IsQOLExLoaded && ConfigHandler.GetEntry<bool>("ShowEdgeArrow"))
                 {
                     if (__instance.gameObject.GetComponent<EdgeArrowManager>() == null)
                     {
