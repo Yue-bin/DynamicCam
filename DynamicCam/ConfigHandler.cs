@@ -32,6 +32,10 @@ public static class ConfigHandler
             FollowCamManager.Instance.ResetKeybind = resetViewportKeybindEntry.Value.MainKey;
         };
 
+        var toggleArrowKeybindEntry = config.Bind(KeySect, "ToggleArrowKeybind", new KeyboardShortcut(KeyCode.F8),
+            "局内切换小箭头是否显示");
+        EntriesDict[toggleArrowKeybindEntry.Definition.Key] = toggleArrowKeybindEntry;
+
         var defaultFollowSmallMapEntry = config.Bind(FollowCamSect, "DefaultFollowSmallMap", false, "小地图是否也默认跟随视角");
         EntriesDict[defaultFollowSmallMapEntry.Definition.Key] = defaultFollowSmallMapEntry;
 

@@ -1,5 +1,6 @@
 ﻿// QOL-Ex
 using System.Linq;
+using BepInEx.Configuration;
 using UnityEngine;
 
 namespace DynamicCam;
@@ -22,6 +23,10 @@ public class EdgeArrowManager : MonoBehaviour
 
     private GameObject parentObj;
     private GameObject spriteObj;
+
+    private bool isDisplaying = true;
+
+    public KeyCode toggleKeyBind => ConfigHandler.GetEntry<KeyboardShortcut>("ToggleArrowKeybindEntry").MainKey;
 
     private void Awake()
     {
@@ -54,24 +59,42 @@ public class EdgeArrowManager : MonoBehaviour
         spriteRenderer.material = materials[playerID];
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(toggleKeyBind))
+        {
+            isDisplaying = !isDisplaying;
+        }
+    }
+
     private void LateUpdate()
     {
-        if (parentObj == null)
+        if (isDisplaying)
         {
-            Debug.LogError("parentObject is null!!!");
-            var found = transform.Find("EdgeArrow");
-            if (found) parentObj = found.gameObject;
-            else return;
+            if (parentObj == null)
+            {
+                Debug.LogError("parentObject is null!!!");
+                var found = transform.Find("EdgeArrow");
+                if (found) parentObj = found.gameObject;
+                else return;
+            }
+
+            var isPlayerVisible = AreAnyRigidbodiesOnScreen();
+
+            if (!isPlayerVisible)
+            {
+                PositionArrowAtScreenEdge();
+            }
+
+            parentObj.SetActive(!isPlayerVisible);
         }
-
-        var isPlayerVisible = AreAnyRigidbodiesOnScreen();
-
-        if (!isPlayerVisible)
+        else
         {
-            PositionArrowAtScreenEdge();
+            if (parentObj.activeSelf)
+            {
+                parentObj.SetActive(false);
+            }
         }
-
-        parentObj.SetActive(!isPlayerVisible);
     }
 
     private bool AreAnyRigidbodiesOnScreen()
