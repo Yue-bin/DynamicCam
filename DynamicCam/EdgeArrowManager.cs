@@ -26,7 +26,7 @@ public class EdgeArrowManager : MonoBehaviour
 
     private bool isDisplaying = true;
 
-    public KeyCode toggleKeyBind => ConfigHandler.GetEntry<KeyboardShortcut>("ToggleArrowKeybindEntry").MainKey;
+    private KeyCode ToggleKeyBind => ConfigHandler.GetEntry<KeyboardShortcut>("ToggleArrowKeybind").MainKey;
 
     private void Awake()
     {
@@ -61,7 +61,7 @@ public class EdgeArrowManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(toggleKeyBind))
+        if (Input.GetKeyDown(ToggleKeyBind))
         {
             isDisplaying = !isDisplaying;
         }
