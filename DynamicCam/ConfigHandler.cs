@@ -20,6 +20,9 @@ public static class ConfigHandler
         var edgeArrowEntry = config.Bind(EdgeArrowSect, "ShowEdgeArrow", false, "是否显示边缘箭头");
         EntriesDict[edgeArrowEntry.Definition.Key] = edgeArrowEntry;
 
+        var toggleArrowKeybindEntry = config.Bind(EdgeArrowSect, "ToggleArrowKeybind", new KeyboardShortcut(KeyCode.F8), "局内切换小箭头是否显示");
+        EntriesDict[toggleArrowKeybindEntry.Definition.Key] = toggleArrowKeybindEntry;
+
         var dynamicCamKeybindEntry = config.Bind(KeySect, "DynamicCamKeybind", new KeyboardShortcut(KeyCode.F5),
             "切换相机跟随快捷键，按住并拖动鼠标中键以拖动视角，按住并滚动以缩放视角");
         EntriesDict[dynamicCamKeybindEntry.Definition.Key] = dynamicCamKeybindEntry;
@@ -35,10 +38,6 @@ public static class ConfigHandler
         {
             FollowCamManager.Instance.ResetKeybind = resetViewportKeybindEntry.Value.MainKey;
         };
-
-        var toggleArrowKeybindEntry = config.Bind(KeySect, "ToggleArrowKeybind", new KeyboardShortcut(KeyCode.F8),
-            "局内切换小箭头是否显示");
-        EntriesDict[toggleArrowKeybindEntry.Definition.Key] = toggleArrowKeybindEntry;
 
         var defaultFollowSmallMapEntry = config.Bind(FollowCamSect, "DefaultFollowSmallMap", false, "小地图是否也默认跟随视角");
         EntriesDict[defaultFollowSmallMapEntry.Definition.Key] = defaultFollowSmallMapEntry;
